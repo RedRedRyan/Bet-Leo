@@ -7,7 +7,7 @@ const Navbar = () => {
     <header>
         <nav>
             <Link href="/" className='logo'>
-            <Image src="/icons/logo.png" alt="Bet Leo Logo" width={24} height={24} />
+            <Image src="/icons/logo.png" alt="Bet Leo Logo" width={36} height={36} />
             </Link>
             <ul>
                 <Link href='/'>Home</Link>

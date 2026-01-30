@@ -226,7 +226,7 @@ export const footballTeams: Team[] = [
         id: 'team-025',
         name: 'Wolverhampton Wanderers',
         symbol: 'WOL',
-        image: '/images/teams/england/Wolverhampton-Wanderers.png',
+        image: '/images/teams/england/Wolves.png',
         sport: 'football',
         stadium: 'Molineux Stadium',
         league: 'EPL',
@@ -1360,16 +1360,16 @@ export interface LeagueInfo {
 
 // Add this constant for league logos
 export const leagueLogos: Record<string, string> = {
-    'EPL': '/images/leagues/epl-logo.png',
-    'LaLiga': '/images/leagues/laliga-logo.png',
-    'BundesLiga': '/images/leagues/bundesliga-logo.png',
-    'SerieA': '/images/leagues/seriea-logo.png',
-    'Ligue1': '/images/leagues/ligue1-logo.png',
-    'ChampionsLeague': '/images/leagues/champions-league-logo.png',
-    'EuropaLeague': '/images/leagues/europa-league-logo.png',
-    'NBA': '/images/leagues/nba-logo.png',
-    'EuroLeague': '/images/leagues/euroleague-logo.png',
-    'IPL': '/images/leagues/ipl-logo.png',
+    'EPL': '/images/teams/logo/eplfull.png',
+    'LaLiga': '/images/teams/logo/laligafull.png',
+    'BundesLiga': '/images/teams/logo/bundesligafull.png',
+    'SerieA': '/images/teams/logo/seriea-logo.png',
+    'Ligue1': '/images/teams/logo/ligue1-logo.png',
+    'ChampionsLeague': '/images/teams/logo/ucl.png',
+    'EuropaLeague': '/images/teams/logo/europa-league-logo.png',
+    'NBA': '/images/teams/logo/nba-logo.png',
+    'EuroLeague': '/images/teams/logo/euroleague-logo.png',
+    'IPL': '/images/teams/logo/ipl-logo.png',
 };
 
 // Add league display names
@@ -1402,7 +1402,7 @@ export const leagueDescriptions: Record<string, string> = {
 
 // You can also add league colors if you want consistent styling
 export const leagueColors: Record<string, { bg: string, text: string }> = {
-    'EPL': { bg: 'bg-red-600', text: 'text-white' },
+    'EPL': { bg: 'bg-blue', text: 'text-white' },
     'LaLiga': { bg: 'bg-gradient-to-r from-red-500 to-yellow-500', text: 'text-white' },
     'BundesLiga': { bg: 'bg-gradient-to-r from-red-500 to-black', text: 'text-white' },
     'SerieA': { bg: 'bg-gradient-to-r from-green-600 to-white', text: 'text-black' },
@@ -1489,10 +1489,10 @@ export const upcomingMatches: MatchEvent[] = [
     },
     {
         eventId: 'match-007',
-        league: 'ChampionsLeague',
-        homeTeam: footballTeams.find(t => t.id === 'team-059')!,
-        awayTeam: footballTeams.find(t => t.id === 'team-006')!,
-        venue: 'San Siro',
+        league: 'EPL',
+        homeTeam: footballTeams.find(t => t.id === 'team-012')!,
+        awayTeam: footballTeams.find(t => t.id === 'team-013')!,
+        venue: 'Vitality Stadium',
         date: '2024-01-27',
         time: '20:45',
         homeWinOdds: 3.00,
@@ -1513,10 +1513,10 @@ export const upcomingMatches: MatchEvent[] = [
     },
     {
         eventId: 'match-009',
-        league: 'EuropaLeague',
-        homeTeam: footballTeams.find(t => t.id === 'team-024')!,
-        awayTeam: footballTeams.find(t => t.id === 'team-049')!,
-        venue: 'London Stadium',
+        league: 'ChampionsLeague',
+        homeTeam: footballTeams.find(t => t.id === 'team-025')!,
+        awayTeam: footballTeams.find(t => t.id === 'team-053')!,
+        venue: 'Molineux Stadium',
         date: '2024-01-29',
         time: '18:00',
         homeWinOdds: 2.10,

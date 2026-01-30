@@ -1,8 +1,9 @@
 'use client'
 import React from 'react'
-import Link from 'next/link'
+import Link from "next/link"
+
 import Image from 'next/image'
-import { leagueLogos, leagueDisplayNames, leagueColors } from '@/libs/constants'
+import { leagueDisplayNames, leagueLogos } from '@/libs/constants'
 import { useBetStore } from '@/libs/betStore'
 
 interface Props {
@@ -24,6 +25,8 @@ interface Props {
     homeWinOdds: number;
     awayWinOdds: number;
     drawOdds: number | null;
+    eventImage?: string;
+    isClickable: boolean; // Declare the isClickable variable
 }
 
 const EventCard = ({
@@ -36,10 +39,12 @@ const EventCard = ({
                        time,
                        homeWinOdds,
                        awayWinOdds,
-                       drawOdds
+                       drawOdds,
+                       eventImage,
+                       isClickable
                    }: Props) => {
     // Get bet store functions
-    const { addBet, removeBet, isBetSelected } = useBetStore();
+    const { addBet, removeBet, isBetSelected, bets } = useBetStore();
 
     // Format date for display
     const formatDate = (dateStr: string) => {
@@ -51,24 +56,32 @@ const EventCard = ({
         });
     };
 
-    // Get league logo
-    const leagueLogo = leagueLogos[league] || '/images/leagues/default-logo.png';
-
     // Get league display name
     const leagueName = leagueDisplayNames[league] || league;
 
-    // Get league colors
-    const leagueColor = leagueColors[league] || { bg: 'bg-gray-600', text: 'text-white' };
+    // Get league logo
+    const leagueLogo = leagueLogos[league] || '/images/leagues/default-logo.png';
 
-    // Handle bet selection
-    const handleBetSelection = (e: React.MouseEvent, team: 'home' | 'away' | 'draw', odds: number) => {
-        e.preventDefault(); // Prevent navigation to event details
+    // Check if any outcome is selected for this event
+    const selectedBet = bets.find((b) => b.eventId === eventId);
 
-        const isSelected = isBetSelected(eventId, team);
+    // Get selected outcome name
+    const getSelectedOutcomeName = () => {
+        if (!selectedBet) return null;
+        if (selectedBet.selectedTeam === 'home') return homeTeam.name;
+        if (selectedBet.selectedTeam === 'away') return awayTeam.name;
+        return 'Draw';
+    };
 
-        if (isSelected) {
+    // Handle bet selection (enforces single selection per event)
+    const handleBetSelection = (team: 'home' | 'away' | 'draw', odds: number) => {
+        const isCurrentSelection = selectedBet?.selectedTeam === team;
+
+        if (isCurrentSelection) {
+            // Deselect the current selection
             removeBet(eventId, team);
         } else {
+            // Add new selection (automatically removes previous selection for this event)
             addBet({
                 eventId,
                 league: leagueName,
@@ -81,120 +94,163 @@ const EventCard = ({
     };
 
     return (
-        <Link
-            href={`/events/${eventId}`}
-            className="block bg-gray-900 rounded-xl border border-gray-800 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 overflow-hidden group"
-        >
-            <div className="p-4">
-                {/* League Header with Logo */}
-                <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center gap-2">
-                        <div className="relative w-8 h-8">
-                            <Image
-                                src={leagueLogo}
-                                alt={leagueName}
-                                fill
-                                className="object-contain"
-                                sizes="32px"
-                            />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className={`text-xs font-bold ${leagueColor.text}`}>
-                                {leagueName}
-                            </span>
-                            <div className="flex items-center gap-1">
-                                <div className={`w-2 h-2 rounded-full ${leagueColor.bg}`}></div>
-                                <span className="text-xs text-gray-400">
-                                    {formatDate(date)} • {time}
-                                </span>
-                            </div>
-                        </div>
+        <div className="bg-blue rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            {/* White Header with rounded corners */}
+            <div className="bg-yellow rounded-lg rounded-t-none p-4 flex items-center justify-between gap-4 min-h-20">
+                {/* League Info */}
+                <div className="flex items-center gap-3">
+                    <div className="relative w-10 h-10 flex-shrink-0">
+                        <Image
+                            src={leagueLogo || "/placeholder.svg"}
+                            alt={leagueName}
+                            fill
+                            className="object-contain"
+                            sizes="40px"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <span className="text-sm font-bold text-blue-600 uppercase">
+                            {leagueName}
+                        </span>
+                        <span className="text-xs text-gray-600">
+                            {formatDate(date)} • {time}
+                        </span>
                     </div>
                 </div>
 
-                {/* Teams */}
-                <div className="flex items-center justify-between mb-6">
-                    {/* Home Team */}
-                    <div className="flex flex-col items-center w-2/5">
-                        <div className="relative w-20 h-20 mb-2">
+                {/* Right Section - Event Image and Selection Summary */}
+                <div className="flex items-center gap-3 ml-auto">
+                    {/* Event Image */}
+                    {eventImage && (
+                        <div className="relative w-16 h-16 flex-shrink-0 hidden sm:block">
                             <Image
-                                src={homeTeam.image}
+                                src={eventImage || "/placeholder.svg"}
+                                alt={`${homeTeam.name} vs ${awayTeam.name}`}
+                                fill
+                                className="object-cover rounded"
+                                sizes="64px"
+                            />
+                        </div>
+                    )}
+
+                    {/* Selection Summary - Always takes up space */}
+                    <div className="min-w-32 flex flex-col items-end gap-1">
+                        {selectedBet ? (
+                            <>
+                                <p className="text-xs text-gray-600 font-medium">Selected</p>
+                                <p className="text-sm font-bold text-blue-600">{getSelectedOutcomeName()}</p>
+                                <p className="text-xs text-gray-600">@ {selectedBet.odds.toFixed(2)}</p>
+                            </>
+                        ) : (
+                            <p className="text-xs text-gray-400 italic">No selection</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* Blue Content Area */}
+            <div className="p-5 text-white">
+                {/* Teams Display */}
+                <div className="flex items-center justify-between mb-5 gap-2">
+                    {/* Home Team */}
+                    <div className="flex flex-col items-center flex-1">
+                        <div className="relative w-14 h-14 mb-2">
+                            <Image
+                                src={homeTeam.image || "/placeholder.svg"}
                                 alt={homeTeam.name}
                                 fill
                                 className="object-contain"
-                                sizes="80px"
+                                sizes="56px"
                             />
                         </div>
-                        <p className="text-white font-semibold text-sm text-center line-clamp-2">{homeTeam.name}</p>
-                        <p className="text-gray-400 text-xs mt-1">{homeTeam.symbol}</p>
+                        <p className="text-xs font-semibold text-center line-clamp-2">{homeTeam.name}</p>
+                        <p className="text-[10px] text-blue-200 mt-1">{homeTeam.symbol}</p>
                     </div>
 
-                    {/* VS */}
-                    <div className="flex flex-col items-center w-1/5">
-                        <div className={`px-3 py-1 rounded-full ${leagueColor.bg} ${leagueColor.text} font-bold text-sm mb-2`}>
+                    {/* VS Badge */}
+                    <div className="flex flex-col items-center gap-2">
+                        <div className="px-2 py-1 rounded-full bg-white/20 text-white font-bold text-xs">
                             VS
                         </div>
-                        <div className="text-xs text-gray-500 text-center line-clamp-2">{venue}</div>
+                        <p className="text-[10px] text-blue-200 text-center max-w-12">{venue}</p>
                     </div>
 
                     {/* Away Team */}
-                    <div className="flex flex-col items-center w-2/5">
-                        <div className="relative w-20 h-20 mb-2">
+                    <div className="flex flex-col items-center flex-1">
+                        <div className="relative w-14 h-14 mb-2">
                             <Image
-                                src={awayTeam.image}
+                                src={awayTeam.image || "/placeholder.svg"}
                                 alt={awayTeam.name}
                                 fill
                                 className="object-contain"
-                                sizes="80px"
+                                sizes="56px"
                             />
                         </div>
-                        <p className="text-white font-semibold text-sm text-center line-clamp-2">{awayTeam.name}</p>
-                        <p className="text-gray-400 text-xs mt-1">{awayTeam.symbol}</p>
+                        <p className="text-xs font-semibold text-center line-clamp-2">{awayTeam.name}</p>
+                        <p className="text-[10px] text-blue-200 mt-1">{awayTeam.symbol}</p>
                     </div>
                 </div>
 
-                {/* Odds */}
+                {/* Odds Buttons - Single Selection */}
                 <div className={`grid ${drawOdds !== null ? 'grid-cols-3' : 'grid-cols-2'} gap-2 mb-4`}>
-                    <button 
-                        onClick={(e) => handleBetSelection(e, 'home', homeWinOdds)}
-                        className={`rounded-lg p-3 text-center hover:opacity-90 transition-all cursor-pointer
-                            ${isBetSelected(eventId, 'home') 
-                                ? 'bg-blue-700 text-white ring-2 ring-yellow-400' 
-                                : `${leagueColor.bg} ${leagueColor.text}`}`}
+                    <button
+                        onClick={() => handleBetSelection('home', homeWinOdds)}
+                        className={`rounded-lg p-3 text-center transition-all duration-200 cursor-pointer font-semibold text-sm ${
+                            selectedBet?.selectedTeam === 'home'
+                                ? 'bg-white text-blue-600 ring-2 ring-white/50 shadow-lg'
+                                : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'
+                        }`}
+                        aria-label={`Place bet on ${homeTeam.name}`}
+                        title={selectedBet?.selectedTeam === 'home' ? 'Click to deselect' : 'Click to select'}
                     >
-                        <div className="text-xs mb-1 opacity-90">Home Win</div>
-                        <div className="font-bold text-xl">{homeWinOdds.toFixed(2)}</div>
+                        <div className="text-xs opacity-90">Home</div>
+                        <div className="text-lg font-bold">{homeWinOdds.toFixed(2)}</div>
+                        {selectedBet?.selectedTeam === 'home' && (
+                            <div className="text-xs mt-1">✓</div>
+                        )}
                     </button>
 
                     {drawOdds !== null && (
-                        <button 
-                            onClick={(e) => handleBetSelection(e, 'draw', drawOdds)}
-                            className={`rounded-lg p-3 text-center hover:opacity-90 transition-all cursor-pointer
-                                ${isBetSelected(eventId, 'draw') 
-                                    ? 'bg-blue-700 text-white ring-2 ring-yellow-400' 
-                                    : `${leagueColor.bg} ${leagueColor.text}`}`}
+                        <button
+                            onClick={() => handleBetSelection('draw', drawOdds)}
+                            className={`rounded-lg p-3 text-center transition-all duration-200 cursor-pointer font-semibold text-sm ${
+                                selectedBet?.selectedTeam === 'draw'
+                                    ? 'bg-white text-blue-600 ring-2 ring-white/50 shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'
+                            }`}
+                            aria-label="Place bet on draw"
+                            title={selectedBet?.selectedTeam === 'draw' ? 'Click to deselect' : 'Click to select'}
                         >
-                            <div className="text-xs mb-1 opacity-90">Draw</div>
-                            <div className="font-bold text-xl">{drawOdds.toFixed(2)}</div>
+                            <div className="text-xs opacity-90">Draw</div>
+                            <div className="text-lg font-bold">{drawOdds.toFixed(2)}</div>
+                            {selectedBet?.selectedTeam === 'draw' && (
+                                <div className="text-xs mt-1">✓</div>
+                            )}
                         </button>
                     )}
 
-                    <button 
-                        onClick={(e) => handleBetSelection(e, 'away', awayWinOdds)}
-                        className={`rounded-lg p-3 text-center hover:opacity-90 transition-all cursor-pointer
-                            ${isBetSelected(eventId, 'away') 
-                                ? 'bg-blue-700 text-white ring-2 ring-yellow-400' 
-                                : `${leagueColor.bg} ${leagueColor.text}`}`}
+                    <button
+                        onClick={() => handleBetSelection('away', awayWinOdds)}
+                        className={`rounded-lg p-3 text-center transition-all duration-200 cursor-pointer font-semibold text-sm ${
+                            selectedBet?.selectedTeam === 'away'
+                                ? 'bg-white text-blue-600 ring-2 ring-white/50 shadow-lg'
+                                : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'
+                        }`}
+                        aria-label={`Place bet on ${awayTeam.name}`}
+                        title={selectedBet?.selectedTeam === 'away' ? 'Click to deselect' : 'Click to select'}
                     >
-                        <div className="text-xs mb-1 opacity-90">Away Win</div>
-                        <div className="font-bold text-xl">{awayWinOdds.toFixed(2)}</div>
+                        <div className="text-xs opacity-90">Away</div>
+                        <div className="text-lg font-bold">{awayWinOdds.toFixed(2)}</div>
+                        {selectedBet?.selectedTeam === 'away' && (
+                            <div className="text-xs mt-1">✓</div>
+                        )}
                     </button>
                 </div>
 
 
             </div>
-        </Link>
-    )
+        </div>
+    );
 }
 
 export default EventCard

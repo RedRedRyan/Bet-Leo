@@ -7,9 +7,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-yellow: #eeff00;
-  --color-blue: #370099;
-  --color-green: #a7b300;
+  --color-yellow: #cdff00;
+  --color-blue: #0040a8;
+  --color-green: #5dff00;
   --color-dark: #262626;
   --font-sans: "Mona Sans", sans-serif;
   --font-schibsted-grotesk: "Schibsted Grotesk", sans-serif;
@@ -47,9 +47,6 @@ body {
 }
 
 @layer base {
-  * {
-    @apply border-2 ;
-  }
 
   body {
     @apply bg-black text-white;
@@ -78,9 +75,63 @@ body {
       @apply text-white text-lg max-sm:text-sm text-center mt-5;
     }
   }
+  #hero {
+    @apply relative z-10 min-h-7/12 w-full border border-transparent;
+
+    h1 {
+      @apply md:mt-32 mt-40 text-xl md:text-[6vw] leading-none text-left  text-yellow;
+    }
+
+    .hero-sun{
+      @apply absolute lg:top-20 md:top-100 lg:right-1/16;
+    }
+    #explore-btn {
+      @apply border-yellow border-2 bg-black flex w-fit cursor-pointer  rounded-full  px-8 py-3.5 max-sm:w-full text-center;
+
+      a {
+        @apply flex-center gap-2 text-center w-full;
+      }
+    }
+
+    .left-leaf {
+      @apply absolute left-0 md:top-20 xl:top-36 2xl:top-52 md:bottom-auto -bottom-20 md:w-fit w-1/3;
+    }
+
+    .right-leaf {
+      @apply absolute right-0 md:bottom-0 xl:top-0 2xl:top-12 top-1/2 md:w-fit w-24;
+    }
+
+    .body {
+      @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 top-auto md:top-[30vh] flex justify-between items-end px-5;
+
+      .content {
+        @apply flex lg:flex-row-reverse flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
+
+        p{
+          @apply font-schibsted-grotesk text-6xl text-yellow max-w-xl;
+        }
+
+        p:last-of-type {
+          @apply 2xl:text-start text-center text-white;
+        }
+
+        .view-cocktails {
+          @apply space-y-5 text-lg lg:max-w-2xs md:max-w-xs w-full;
+
+          p {
+            @apply text-left;
+          }
+
+          a {
+            @apply font-semibold opacity-80 2xl:text-start text-center hover:text-yellow;
+          }
+        }
+      }
+    }
+  }
 
   #explore-btn {
-    @apply border-b-blue bg-black flex w-fit cursor-pointer  rounded-full border px-8 py-3.5 max-sm:w-full text-center;
+    @apply border-yellow border-2 bg-black flex w-fit cursor-pointer  rounded-full  px-8 py-3.5 max-sm:w-full text-center;
 
     a {
       @apply flex-center gap-2 text-center w-full;
