@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import ConnectButton from '@/components/connect-button'
 
 export default function Home() {
     return (
@@ -24,12 +25,9 @@ export default function Home() {
                                     >
                                         Explore Events
                                     </Link>
-                                    <Link
-                                        href="/wallet"
-                                        className="inline-flex items-center justify-center border-2 border-blue bg-black text-blue rounded-full px-8 py-4 cursor-pointer transition-all hover:bg-blue hover:text-white font-semibold text-center"
-                                    >
-                                        Connect Wallet
-                                    </Link>
+                                    
+                                    <ConnectButton />
+                                    
                                 </div>
                             </div>
 
