@@ -3,7 +3,7 @@ import { Schibsted_Grotesk, Martian_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import BetslipButton from "@/components/BetslipButton";
-
+import { WalletProvider } from "@/components/wallet-provider";
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
   subsets: ["latin"],
@@ -33,9 +33,11 @@ export default function RootLayout({
       <body
         className={`${schibstedGrotesk.variable} ${martianMono.variable} ${inter.variable} min-h-screen antialiased`}
       >
+        <WalletProvider>
         <Navbar />
         {children}
       <BetslipButton/>
+      </WalletProvider>
       </body>
     </html>
   );

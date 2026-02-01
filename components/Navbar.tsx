@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import ConnectButton from './connect-button'
 
 const Navbar = () => {
   return (
@@ -14,6 +15,7 @@ const Navbar = () => {
                 <Link href='/sports'>Sports</Link>
                 <Link href='/casino'>Casino</Link>
                 <Link href='/wallet'>Wallet</Link>
+                <ConnectButton />
             </ul>
         </nav>
     </header>
