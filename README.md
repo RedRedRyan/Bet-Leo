@@ -406,8 +406,6 @@ Built with:
 
 - ✨ Modern, professional design
 - 🎯 Fully functional platform
-- 📱 Responsive on all devices
-- ♿ Accessible to all users
 - 🚀 Ready for deployment
 - 🔧 Easy to customize
 - 📚 Well documented

@@ -39,11 +39,19 @@ body {
 }
 
 @utility glass {
-  @apply bg-[#12121280]/50 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl border-b border-b-black;
+  @apply bg-blue rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl border-b border-b-black;
 }
 
 @utility card-shadow {
   box-shadow: 0px 4px 40px 0px #00000066;
+}
+
+@utility green-img {
+  background: url("/images/green.png") no-repeat center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 @layer base {
@@ -70,13 +78,31 @@ body {
 }
 
 @layer components {
-  #home {
-    .subheading {
-      @apply text-white text-lg max-sm:text-sm text-center mt-5;
+  header {
+    @apply glass sticky top-0 z-50;
+
+    nav {
+      @apply flex flex-row justify-between mx-auto container sm:px-10 px-5 py-4 border-b-2 border-yellow;
     }
+
+    .logo {
+      @apply flex flex-row items-center gap-2;
+
+      p {
+        @apply text-xl font-bold italic max-sm:hidden;
+      }
+    }
+
+    ul {
+      @apply flex flex-row items-center gap-6;
+    }
+
+  }
+  #wallet-adapter-button {
+    @apply inline-block rounded-full bg-white text-black px-4 py-2 text-sm font-medium mb-8;
   }
   #hero {
-    @apply relative z-10 min-h-7/12 w-full border border-transparent;
+    @apply relative z-10 min-h-dvh w-full ;
 
     h1 {
       @apply md:mt-32 mt-40 text-xl md:text-[6vw] leading-none text-left  text-yellow;
@@ -138,25 +164,7 @@ body {
     }
   }
 
-  header {
-    @apply glass sticky top-0 z-50;
 
-    nav {
-      @apply flex flex-row justify-between mx-auto container sm:px-10 px-5 py-4;
-    }
-
-    .logo {
-      @apply flex flex-row items-center gap-2;
-
-      p {
-        @apply text-xl font-bold italic max-sm:hidden;
-      }
-    }
-
-    ul {
-      @apply flex flex-row items-center gap-6;
-    }
-  }
 
   .events {
     @apply grid md:grid-cols-3 gap-10 sm:grid-cols-2 grid-cols-1;

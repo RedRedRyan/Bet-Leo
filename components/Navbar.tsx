@@ -11,7 +11,7 @@ const Navbar = () => {
             <Image src="/icons/logo.png" alt="Bet Leo Logo" width={36} height={36} />
             </Link>
             <ul>
-                <Link href='/'>Home</Link>
+
                 <Link href='/sports'>Sports</Link>
                 <Link href='/casino'>Casino</Link>
                 <Link href='/wallet'>Wallet</Link>
