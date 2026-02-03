@@ -29,15 +29,13 @@ export default function Home() {
                                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight font-schibsted-grotesk font-bold text-yellow">
                                     Anonymous Bets <br className="hidden sm:block"/> Infinite Wins
                                 </h1>
-                                <p className="text-lg md:text-xl text-gray-300 mt-6 max-w-xl">
-                                    Place private bets on football, basketball, cricket and casino games using Aleo's zero-knowledge technology. Your bets, your business.
-                                </p>
+
                                 <div className="flex flex-col sm:flex-row gap-4 mt-8">
                                     <Link
                                         href="/sports"
                                         className="inline-flex items-center justify-center border-2 border-yellow bg-black text-yellow rounded-full px-8 py-4 cursor-pointer transition-all hover:bg-yellow hover:text-black font-semibold text-center"
                                     >
-                                        Explore Events
+                                        Find Games
                                     </Link>
 
                                     <ConnectButton />

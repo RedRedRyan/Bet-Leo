@@ -42,15 +42,6 @@ const SportsPage = () => {
 
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Page Header */}
-                <div className="mb-12">
-                    <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-2 text-balance">
-                        Sports Betting
-                    </h1>
-                    <p className="text-muted-foreground text-lg">
-                        Choose your favorite sport and place your bets on upcoming matches
-                    </p>
-                </div>
 
                 {/* Filter Buttons */}
                 <div className="mb-10">
