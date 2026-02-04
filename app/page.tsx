@@ -17,7 +17,7 @@ export default function Home() {
             type: 'lines',
         })
         gsap.from(heroSplit.lines, {
-            yPercent: -200,
+            yPercent: -300,
             duration: 1.5,
             ease: "power1.out",
             stagger: 0.06,
@@ -41,8 +41,7 @@ export default function Home() {
                             <div className="flex flex-col sm:flex-row gap-4 mt-8">
                                 <Link
                                     href="/sports"
-                                    className="inline-flex items-center justify-center border-2 border-yellow bg-black text-yellow rounded-full px-8 py-4 cursor-pointer transition-all hover:bg-yellow hover:text-black font-semibold text-center"
-                                >
+                                    id='explore-btn' >
                                     Find Games
                                 </Link>
 
