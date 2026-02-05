@@ -122,12 +122,30 @@ body {
       @apply grid grid-cols-1 md:grid-cols-6 gap-5 md:px-0 px-5;
 
       > div {
-        @apply rounded-3xl overflow-hidden h-160 relative;
+        @apply rounded-3xl overflow-hidden h-120  relative;
       }
 
       img {
         @apply object-cover w-full h-full;
       }
+    }
+    .info-grid {
+      @apply grid grid-cols-1 md:grid-cols-12 gap-5 md:px-0 px-5;
+
+      > div {
+        @apply rounded-3xl overflow-hidden h-40
+        relative;
+      }
+
+      img {
+        @apply object-contain w-full h-full;
+      }
+    }
+    #info1 {
+      @apply bg-yellow;
+    }
+    #info2 {
+      @apply bg-green;
     }
 
     .body {

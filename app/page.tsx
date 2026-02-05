@@ -61,6 +61,24 @@ export default function Home() {
 
                         </div>
                     </div>
+                    <div className='info-grid'>
+
+                        <div id="info1" className='md:col-span-3'>
+
+
+                        </div>
+                        <div id="info2" className='md:col-span-3'>
+
+
+                        </div>
+                        <div className='md:col-span-3'>
+                            <img src={'/images/players.png'} alt={'green'}
+                            />
+                        </div>
+                        <div className='md:col-span-3 bg:orange-100'>
+                        <img src={"/images/basketball.png"} alt={"basketball"}/>
+                        </div>
+                    </div>
                 </section>
 
                 <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
