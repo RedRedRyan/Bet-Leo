@@ -63,20 +63,71 @@ export default function Home() {
                     </div>
                     <div className='info-grid'>
 
-                        <div id="info1" className='md:col-span-3'>
+                        <div id="info1" className='md:col-span-6'>
+                            {/* 2x3 Grid for images */}
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6">
+                                {/* Row 1 */}
+                                <div className="flex items-center justify-center lg:mt-4">
+                                    <img
+                                        src='/images/teams/logo/cl.png'
+                                        alt='pin'
+                                        className='h-16 w-16 object-contain'
+                                    />
+                                </div>
 
+                                <div className="flex items-center justify-center">
+                                    <img
+                                        src="/images/teams/logo/pl.png"
+                                        alt='dice'
+                                        className='h-16 w-16 object-contain'
+                                    />
+                                </div>
 
+                                <div className="flex items-center justify-center">
+                                    <img
+                                        src="/images/teams/logo/laliga.png"
+                                        alt='example 1'
+                                        className='h-16 w-16 object-contain'
+                                    />
+                                </div>
+
+                                {/* Row 2 */}
+                                <div className="flex items-center justify-center">
+                                    <img
+                                        src="/images/basketball/NBA.png"
+                                        alt='example 2'
+                                        className='h-16 w-16 object-contain'
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-center">
+                                    <img
+                                        src="/images/teams/logo/seriea.png"
+                                        alt='example 3'
+                                        className='h-16 w-16 object-contain'
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-center">
+                                    <img
+                                        src="/images/teams/logo/europa.png"
+                                        alt='example 4'
+                                        className='h-16 w-16 object-contain'
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div id="info2" className='md:col-span-3'>
 
+                        <div id="info2" className='md:col-span-6'>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                <div className="order-2 md:order-1">
+                                    <img src='/images/cards.png' alt="Cards" height={32}/>
+                                </div>
 
-                        </div>
-                        <div className='md:col-span-3'>
-                            <img src={'/images/players.png'} alt={'green'}
-                            />
-                        </div>
-                        <div className='md:col-span-3 bg:orange-100'>
-                        <img src={"/images/basketball.png"} alt={"basketball"}/>
+                                <div className="order-1 md:order-2">
+                                    <p className="badge">Casino</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
